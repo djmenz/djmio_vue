@@ -1,0 +1,4 @@
+client/docker_instructions
+client/run_command.txt
+client/start_server
+node_modules/*
