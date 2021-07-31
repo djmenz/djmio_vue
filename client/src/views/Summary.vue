@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-    <h1 v-if="!this.loaded">Loading Data....</h1>
+    <h1 v-if="!this.loaded">Loading Summary Data....</h1>
     <tr v-for="entry in converted_data" v-bind:key="entry">
       <td>{{ entry.summary_data.startingDate[0] }}</td>
       <td>{{ entry.summary_data.avgBW.toFixed(2) }} - ({{ entry.summary_data.avgBWCount }}/7)</td>
