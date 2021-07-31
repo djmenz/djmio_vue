@@ -15,17 +15,9 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest client/
-      # - docker tag djmiovue:latest 741637717557.dkr.ecr.ap-southeast-2.amazonaws.com/djmio_vue:latest;
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-
-
-
-
-      #docker build -t djmiovue .;
-      #docker tag djmiovue:latest 741637717557.dkr.ecr.ap-southeast-2.amazonaws.com/djmio_vue:latest;
-      #docker push 741637717557.dkr.ecr.ap-southeast-2.amazonaws.com/djmio_vue:latest;
