@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <h1 v-if="!this.loaded">Loading Data....</h1>
+      <h1 v-if="!this.loaded">Loading Daily Data....</h1>
       <v-col cols="1"> </v-col>
       <v-col justify="center">
         <week
