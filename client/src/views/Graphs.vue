@@ -1,6 +1,6 @@
 <template>
   <div class="graphs">
-    <h1>Bodyweight graphs</h1>
+    <h1>Bodyweight graphs TBA</h1>
     <PlanetChart/>
     <img src="../assets/bw_years.png" height='500'>
 
