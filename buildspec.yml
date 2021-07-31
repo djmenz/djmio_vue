@@ -21,3 +21,4 @@ phases:
       - echo Build completed on `date`
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - aws ecs update-service --cluster arn:aws:ecs:ap-southeast-2:741637717557:cluster/ecs-course-ec2 --service djmio --force-new-deployment --region ap-southeast-2;
