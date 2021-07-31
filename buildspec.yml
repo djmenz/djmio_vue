@@ -7,7 +7,7 @@ phases:
       - aws --version
       - echo $AWS_DEFAULT_REGION
       - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 741637717557.dkr.ecr.ap-southeast-2.amazonaws.com;
-      - REPOSITORY_URI=741637717557.dkr.ecr.eu-central-1.amazonaws.com/ecr-simplehttp
+      - REPOSITORY_URI=741637717557.dkr.ecr.eu-central-1.amazonaws.com/djmio_vue
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
@@ -15,7 +15,8 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest client/
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag djmiovue:latest 741637717557.dkr.ecr.ap-southeast-2.amazonaws.com/djmio_vue:latest;
+      #- docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
