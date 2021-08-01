@@ -165,7 +165,7 @@ export default {
         });
     },
     getData() {
-      const path = 'http://jcore.rocks:8080/api';
+      const path = 'http://djm.io/api';
       axios.get(path)
         .then((res) => {
           // console.log(res);
