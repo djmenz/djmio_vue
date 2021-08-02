@@ -4,6 +4,7 @@
 
 import axios from 'axios';
 import moment from 'moment';
+import config from '../config';
 
 export default {
   methods: {
@@ -81,7 +82,7 @@ export default {
       return `${hours}:${minutes}`;
     },
     getDataM() {
-      const path = 'http://djm.io/api';
+      const path = config.apiUrl;
       axios.get(path)
         .then((res) => {
           const tempccdata = this.convertDataM(res.data);

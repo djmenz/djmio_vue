@@ -46,6 +46,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import helpers from '../mixins/gendata';
+import config from '../config';
 
 export default {
   name: 'summaryView',
@@ -59,7 +60,7 @@ export default {
   mixins: [helpers],
   methods: {
     getData() {
-      const path = 'http://djm.io/api';
+      const path = config.apiUrl;
       axios.get(path)
         .then((res) => {
           // console.log(res);

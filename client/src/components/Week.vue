@@ -25,13 +25,13 @@
     <tr v-for="entry in week_data.days_data" v-bind:key="entry">
       <td>{{ entry[0].split(' ')[0] }}</td>
       <td>{{ entry[0].split(' ')[1] }}</td>
-      <td>{{ entry[1].bodyweight }}</td>
-      <td>{{ entry[1].calories.toFixed(0) }}</td>
-      <td>{{ entry[1].protein.toFixed(0) }}</td>
-      <td>{{ entry[1].carbs.toFixed(0) }}</td>
-      <td>{{ entry[1].fats.toFixed(0) }}</td>
-      <td>{{ entry[1].steps }}</td>
-      <td  v-if="entry[1].lifting_sessions && entry[1].lifting_sessions.length >0">
+      <td v-if="entry[1].bodyweight===0">-</td><td v-else>{{ entry[1].bodyweight }}</td>
+      <td v-if="entry[1].calories===0">-</td><td v-else>{{ entry[1].calories.toFixed(0) }}</td>
+      <td v-if="entry[1].calories===0">-</td><td v-else>{{ entry[1].protein.toFixed(0) }}</td>
+      <td v-if="entry[1].calories===0">-</td><td v-else>{{ entry[1].carbs.toFixed(0) }}</td>
+      <td v-if="entry[1].calories===0">-</td><td v-else>{{ entry[1].fats.toFixed(0) }}</td>
+      <td v-if="parseInt(entry[1].steps)===0">-</td><td v-else>{{ entry[1].steps }}</td>
+      <td v-if="entry[1].lifting_sessions && entry[1].lifting_sessions.length >0">
          <v-btn
       color="success"
       class="mr-2"
