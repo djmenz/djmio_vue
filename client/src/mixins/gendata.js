@@ -82,16 +82,17 @@ export default {
       return `${hours}:${minutes}`;
     },
     getDataM() {
-      const path = config.apiUrl;
-      axios.get(path)
-        .then((res) => {
-          const tempccdata = this.convertDataM(res.data);
-          return tempccdata;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
-        });
+      return new Promise((resolve, reject) => {
+        const path = config.apiUrl;
+        axios.get(path)
+          .then((res) => {
+            const tempccdata = this.convertDataM(res.data);
+            resolve(tempccdata);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
     },
     convertDataM(rawData) {
       const convertedData = [];

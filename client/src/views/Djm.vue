@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
+      <h1> {{dataCached}}</h1>
       <h1 v-if="!this.loaded">Loading the Daily Data....</h1>
       <v-col cols="1"> </v-col>
       <v-col justify="center">
@@ -133,6 +134,7 @@
 import Week from '@/components/Week.vue';
 import axios from 'axios';
 import moment from 'moment';
+import useSWRV from 'swrv';
 import helpers from '../mixins/gendata';
 import config from '../config';
 
@@ -154,15 +156,16 @@ export default {
       currentLiftDialog: '',
       currentStravaDialog: '',
       loaded: false,
+      dataCached: '',
     };
   },
   mixins: [helpers],
   methods: {
-    // get this working
     getDataNew() {
       this.getDataM()
         .then((res) => {
           this.converted_data = res;
+          this.loaded = true;
         });
     },
     getData() {
@@ -254,7 +257,16 @@ export default {
     this.date = moment()
       .add(1 - moment().isoWeekday(), 'days')
       .format('DD-MM-YYYY');
-    this.getData();
+    this.getDataNew();
+  },
+  setup() {
+    const fetcher = (key) => fetch(key).then((res) => res.json());
+    // eslint-disable-next-line no-unused-vars
+    const { dataCached, error } = useSWRV(config.apiUrl, (key) => fetcher);
+    return {
+      dataCached,
+      error,
+    };
   },
 };
 </script>

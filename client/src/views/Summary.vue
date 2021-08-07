@@ -59,6 +59,13 @@ export default {
   },
   mixins: [helpers],
   methods: {
+    getDataNew() {
+      this.getDataM()
+        .then((res) => {
+          this.converted_data = res;
+          this.loaded = true;
+        });
+    },
     getData() {
       const path = config.apiUrl;
       axios.get(path)
@@ -80,7 +87,7 @@ export default {
   created() {
     this.todays_date = moment().format('DD-MM-YYYY');
     this.date = this.todays_date;
-    this.getData();
+    this.getDataNew();
   },
 };
 </script>
