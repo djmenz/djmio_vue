@@ -3,6 +3,7 @@
     <v-row>
       <v-col cols='2'></v-col>
       <v-col cols='8'>
+        <h1>Bodyweight</h1>
         <ScatterChart v-bind='scatterChartProps' />
         <!-- <tr v-for='entry in converted_data' v-bind:key='entry'>
         <td >{{ entry.days_data[0][1].bodyweight}}</td>
