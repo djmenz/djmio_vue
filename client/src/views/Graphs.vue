@@ -1,15 +1,14 @@
 <template>
-  <div id='graphs'>
+  <div id='graphs'  >
     <v-row>
       <v-col cols='2'></v-col>
       <v-col cols='8'>
-        <h1>Bodyweight</h1>
         <ScatterChart v-bind='scatterChartProps' />
         <!-- <tr v-for='entry in converted_data' v-bind:key='entry'>
         <td >{{ entry.days_data[0][1].bodyweight}}</td>
       </tr> -->
+      <h1 v-if="!this.loaded">Loading the Data....</h1>
       </v-col>
-
       <v-col cols='2'></v-col>
     </v-row>
   </div>
@@ -34,6 +33,7 @@ export default defineComponent({
     return {
       converted_data: '',
       scatter_data: [],
+      loaded: false,
     };
   },
   methods: {
@@ -72,18 +72,31 @@ export default defineComponent({
           display: false,
         },
         tooltip: {
-          callback: (value) => moment.unix(value / 1000).format('MMM YY'),
+          enabled: true,
+          callbacks: {
+            label: (value) => `${(value.parsed.y).toFixed(2)}kg || ${moment.unix(value.parsed.x / 1000).format('DD MMM YYYY')}`,
+          },
         },
       },
       showLine: true,
       tension: 1,
+      aspectRatio: 1.5,
       spanGaps: true,
+      responsive: true,
       cubicInterpolationMode: 'monotone',
       scales: {
         y: {
           type: 'linear',
           min: 72.5,
           max: 82.5,
+          title: {
+            display: true,
+            text: 'Bodyweight (kg)',
+            font: {
+              size: 30,
+              weight: 'bold',
+            },
+          },
           ticks: {
             stepSize: 0.5,
           },
@@ -94,6 +107,14 @@ export default defineComponent({
           min: moment('01-01-18', 'DD-MM-YY').unix() * 1000,
           max: moment('31-12-21', 'DD-MM-YY').unix() * 1000,
           display: true,
+          title: {
+            display: true,
+            text: 'Date',
+            font: {
+              size: 30,
+              weight: 'bold',
+            },
+          },
           ticks: {
             count: 30,
             callback: (value) => moment.unix(value / 1000).format('MMM YY'),
