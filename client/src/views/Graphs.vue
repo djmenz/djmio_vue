@@ -4,9 +4,6 @@
       <v-col cols='2'></v-col>
       <v-col cols='8'>
         <ScatterChart v-bind='scatterChartProps' />
-        <!-- <tr v-for='entry in converted_data' v-bind:key='entry'>
-        <td >{{ entry.days_data[0][1].bodyweight}}</td>
-      </tr> -->
       <h1 v-if="!this.loaded">Loading the Data....</h1>
       </v-col>
       <v-col cols='2'></v-col>
@@ -31,35 +28,37 @@ export default defineComponent({
   mixins: [helpers],
   data() {
     return {
-      converted_data: '',
+      // converted_data: '',
       scatter_data: [],
       loaded: false,
     };
   },
   methods: {
     getDataNew() {
-      this.getDataM().then((res) => {
-        let xx = 0;
-        const newData2 = [];
-        this.converted_data = res.reverse();
-        this.converted_data.forEach((element) => {
-          xx += 1;
-          console.log(xx);
-
-          const tempDateStr = element.summary_data.startingDate[0].split(' ')[1];
-          const tempDateObj = moment(tempDateStr, 'DD-MM-YY');
-          // console.log(tempDateObj);
-          // console.log(element.summary_data.startingDate[0]);
-          newData2.push({ x: tempDateObj, y: element.summary_data.avgBW });
-        });
-        this.shuffleData(newData2);
-        this.loaded = true;
-        console.log(moment('01-01-18', 'DD-MM-YY'));
+      const newData2 = [];
+      this.$store.state.converted_data.forEach((element) => {
+        const tempDateStr = element.summary_data.startingDate[0].split(' ')[1];
+        const tempDateObj = moment(tempDateStr, 'DD-MM-YY');
+        newData2.push({ x: tempDateObj, y: element.summary_data.avgBW });
       });
+      this.shuffleData(newData2);
+      this.loaded = true;
+    },
+  },
+  computed: {
+    converted_data() {
+      return this.$store.state.converted_data;
+    },
+  },
+  watch: {
+    converted_data() {
+      this.getDataNew();
     },
   },
   created() {
-    this.getDataNew();
+    if (this.$store.state.converted_data.length !== 0) {
+      this.getDataNew();
+    }
   },
   setup() {
     const data = ref([]);
@@ -91,7 +90,7 @@ export default defineComponent({
           max: 82.5,
           title: {
             display: true,
-            text: 'Bodyweight (kg)',
+            text: 'Bodyweight - Weekly Avg - (kg)',
             font: {
               size: 30,
               weight: 'bold',

@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-    <h1 v-if="!this.loaded">Loading Summary Data....</h1>
+    <h1 v-if="this.converted_data.length==0">Loading the Daily Data....</h1>
     <tr v-for="entry in converted_data" v-bind:key="entry">
       <td>{{ entry.summary_data.startingDate[0] }}</td>
       <td>{{ entry.summary_data.avgBW.toFixed(2) }} - ({{ entry.summary_data.avgBWCount }}/7)</td>
@@ -43,51 +43,32 @@
 </template>
 
 <script>
-import axios from 'axios';
 import moment from 'moment';
 import helpers from '../mixins/gendata';
-import config from '../config';
 
 export default {
   name: 'summaryView',
   data() {
     return {
       raw_data: [],
-      converted_data: [],
+      // converted_data: [],
       loaded: false,
     };
   },
   mixins: [helpers],
   methods: {
-    getDataNew() {
-      this.getDataM()
-        .then((res) => {
-          this.converted_data = res;
-          this.loaded = true;
-        });
-    },
-    getData() {
-      const path = config.apiUrl;
-      axios.get(path)
-        .then((res) => {
-          // console.log(res);
-          this.raw_data = res.data;
-          this.converted_data = this.convertDataM(this.raw_data);
-          this.loaded = true;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
-        });
-    },
     ordToDate(ordinalDate) {
       return ordinalDate;
+    },
+  },
+  computed: {
+    converted_data() {
+      return this.$store.state.converted_data;
     },
   },
   created() {
     this.todays_date = moment().format('DD-MM-YYYY');
     this.date = this.todays_date;
-    this.getDataNew();
   },
 };
 </script>

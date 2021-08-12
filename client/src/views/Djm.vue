@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <h1> {{dataCached}}</h1>
-      <h1 v-if="!this.loaded">Loading the Daily Data....</h1>
+      <h1 v-if="this.converted_data.length==0">Loading the Daily Data....</h1>
       <v-col cols="1"> </v-col>
       <v-col justify="center">
         <week
@@ -132,11 +132,8 @@
 
 <script>
 import Week from '@/components/Week.vue';
-import axios from 'axios';
 import moment from 'moment';
-import useSWRV from 'swrv';
 import helpers from '../mixins/gendata';
-import config from '../config';
 
 export default {
   name: 'dailyView',
@@ -147,7 +144,7 @@ export default {
     return {
       todays_date: '',
       raw_data: '',
-      converted_data: '',
+      // converted_data: '', now computed from the vuex store
       date: '01-06-2020',
       averages: { steps: 0, bodyweight: 0, calories: 0 },
       currentWeek: true,
@@ -161,26 +158,6 @@ export default {
   },
   mixins: [helpers],
   methods: {
-    getDataNew() {
-      this.getDataM()
-        .then((res) => {
-          this.converted_data = res;
-          this.loaded = true;
-        });
-    },
-    getData() {
-      const path = config.apiUrl;
-      axios.get(path)
-        .then((res) => {
-          // console.log(res);
-          this.raw_data = res.data;
-          this.converted_data = this.convertDataM(this.raw_data);
-          this.loaded = true;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
     ordToDate(ordinalDate) {
       return ordinalDate;
     },
@@ -229,10 +206,8 @@ export default {
     },
   },
   computed: {
-    // a computed getter
-    reversedMessage() {
-      // `this` points to the vm instance
-      return this.msg.split('').reverse().join('');
+    converted_data() {
+      return this.$store.state.converted_data;
     },
     dataCounts() {
       const counts = { steps: 0, bodyweight: 0, calories: 0 };
@@ -257,16 +232,7 @@ export default {
     this.date = moment()
       .add(1 - moment().isoWeekday(), 'days')
       .format('DD-MM-YYYY');
-    this.getDataNew();
-  },
-  setup() {
-    const fetcher = (key) => fetch(key).then((res) => res.json());
-    // eslint-disable-next-line no-unused-vars
-    const { dataCached, error } = useSWRV(config.apiUrl, (key) => fetcher);
-    return {
-      dataCached,
-      error,
-    };
+    // this.getData();
   },
 };
 </script>
