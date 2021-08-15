@@ -1,3 +1,3 @@
 export default {
-  apiUrl: 'http://jcore.rocks:8080/api',
+  apiUrl: 'https://djm.io:8443/api',
 };
