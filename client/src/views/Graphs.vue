@@ -79,7 +79,6 @@ export default defineComponent({
       },
       showLine: true,
       tension: 1,
-      aspectRatio: 1.5,
       spanGaps: true,
       responsive: true,
       cubicInterpolationMode: 'monotone',
