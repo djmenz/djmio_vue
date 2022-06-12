@@ -104,7 +104,7 @@ export default defineComponent({
         x: {
           type: 'linear',
           min: moment('01-01-18', 'DD-MM-YY').unix() * 1000,
-          max: moment('31-12-21', 'DD-MM-YY').unix() * 1000,
+          max: moment('31-12-22', 'DD-MM-YY').unix() * 1000,
           display: true,
           title: {
             display: true,
