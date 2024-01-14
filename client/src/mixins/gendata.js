@@ -2,9 +2,10 @@
 
 // eslint-disable-next-line no-unused-vars
 
-import axios from 'axios';
+// import axios from 'axios';
 import moment from 'moment';
-import config from '../config';
+// import config from '../config';
+import datajson from '../../latest_all_days.json';
 
 export default {
   methods: {
@@ -82,16 +83,9 @@ export default {
       return `${hours}:${minutes}`;
     },
     getDataM() {
-      return new Promise((resolve, reject) => {
-        const path = config.apiUrl;
-        axios.get(path)
-          .then((res) => {
-            const tempccdata = this.convertDataM(res.data);
-            resolve(tempccdata);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+      return new Promise((resolve) => {
+        const tempccdata = this.convertDataM(datajson);
+        resolve(tempccdata);
       });
     },
     convertDataM(rawData) {

@@ -18,8 +18,8 @@
       </div>
           <h3 color="red">DJM.IO |
     <router-link to="/">Daily View</router-link> |
-    <router-link to="/Summary">Summary</router-link> |
-    <router-link to="/Graphs">Graphs</router-link>
+    <router-link to="/Summary">Summary</router-link>
+    <!-- <router-link to="/Graphs">Graphs</router-link> -->
     </h3>
       <v-spacer>
 
